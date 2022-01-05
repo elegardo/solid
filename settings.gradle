@@ -1,0 +1,7 @@
+rootProject.name = 'solid'
+
+include '1-single'
+include '2-open'
+include '3-liskov'
+include '4-interface'
+include '5-dependency'

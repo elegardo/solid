@@ -1,0 +1,14 @@
+plugins {
+	id 'java'
+}
+
+group = 'cl.mobdev.onboarding'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+test {
+	useJUnitPlatform()
+}
