@@ -44,8 +44,9 @@ public class CarBuilderRobotTest {
   }
 
   /**
-   * La empresa acaba de concretar un muy buen negocio con un partner
-   * en el cual podra venderles motores a un muy buen precio
+   * La empresa acaba de concretar un muy buen negocio con un partner,
+   * en dicho acuerdo nuestra compañia podra venderles
+   * motores a un muy buen precio a nuestro partner
    **/
 
   @Test
@@ -57,7 +58,7 @@ public class CarBuilderRobotTest {
      * dependencias entre las distintas actividades
      */
 
-    fail("Robot CarInventoryRobot don't can build engines!");
+    fail("Robot CarBuilderRobot don't can build engines!");
   }
 
 }

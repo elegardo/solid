@@ -1,7 +1,7 @@
 package cl.mobdev.onboarding.dependency.badRobot;
 
-import cl.mobdev.onboarding.dependency.domain.Car;
-import cl.mobdev.onboarding.dependency.domain.Engine;
+import cl.mobdev.onboarding.dependency.badRobot.domain.Car;
+import cl.mobdev.onboarding.dependency.badRobot.domain.Engine;
 
 public class CarBuilderRobot {
 

@@ -3,7 +3,7 @@ package cl.mobdev.onboarding.dependency.badRobot;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import cl.mobdev.onboarding.dependency.domain.Car;
+import cl.mobdev.onboarding.dependency.badRobot.domain.Car;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

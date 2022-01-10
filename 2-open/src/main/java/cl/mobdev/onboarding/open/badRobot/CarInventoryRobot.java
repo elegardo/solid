@@ -20,14 +20,17 @@ public class CarInventoryRobot {
     int totalCost = 0;
 
     if ("sedan".equals(car.getModel())) {
-      totalCost = costByWheel * wheelsBySedanCar
-          + costBySecurityBelt * beltsBySedanCar;
+
+      totalCost = costByWheel * wheelsBySedanCar + costBySecurityBelt * beltsBySedanCar;
+
     } else if ("suv".equals(car.getModel())) {
-      totalCost = costByWheel * wheelsBySuvCar
-          + costBySecurityBelt * beltsBySuvCar;
+
+      totalCost = costByWheel * wheelsBySuvCar + costBySecurityBelt * beltsBySuvCar;
+
     } else if ("offRoad".equals(car.getModel())) {
-      totalCost = costByWheel * wheelsByOffRoadCar
-          + costBySecurityBelt * beltsByOffRoadCar;
+
+      totalCost = costByWheel * wheelsByOffRoadCar + costBySecurityBelt * beltsByOffRoadCar;
+
     }
 
     return totalCost;

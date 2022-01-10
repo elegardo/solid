@@ -8,7 +8,6 @@ public class VehicleInventoryRobot {
   private final int costBySecurityBelt = 5;
 
   public int calculateTotalCost(Vehicle vehicle) {
-    return costBySecurityBelt * vehicle.numberOfSecurityBelt()
-        + costByWheel * vehicle.numberOfWheels();
+    return costBySecurityBelt * vehicle.numberOfSecurityBelt() + costByWheel * vehicle.numberOfWheels();
   }
 }

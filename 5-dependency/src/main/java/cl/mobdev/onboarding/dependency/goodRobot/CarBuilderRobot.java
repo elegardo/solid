@@ -1,7 +1,7 @@
 package cl.mobdev.onboarding.dependency.goodRobot;
 
-import cl.mobdev.onboarding.dependency.domain.Car;
-import cl.mobdev.onboarding.dependency.domain.Engine;
+import cl.mobdev.onboarding.dependency.goodRobot.domain.Car;
+import cl.mobdev.onboarding.dependency.goodRobot.domain.Engine;
 
 public class CarBuilderRobot {
 
@@ -10,7 +10,7 @@ public class CarBuilderRobot {
     //initialize building a new Car
     Car newCar = new Car();
 
-    //install engine provided in car
+    //install engine with capacity provided
     newCar.setEngine(engine);
 
     return newCar;

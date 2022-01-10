@@ -7,7 +7,7 @@ import cl.mobdev.onboarding.liskov.goodRobot.domain.Motorcycle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class InventoryRobotTest {
+public class VehicleInventoryRobotTest {
 
   private CarBuilderRobot carBuilderRobot;
   private MotorcycleBuilderRobot motorcycleBuilderRobot;

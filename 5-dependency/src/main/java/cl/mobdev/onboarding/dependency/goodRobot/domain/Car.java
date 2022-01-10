@@ -1,4 +1,4 @@
-package cl.mobdev.onboarding.dependency.domain;
+package cl.mobdev.onboarding.dependency.goodRobot.domain;
 
 public class Car {
 

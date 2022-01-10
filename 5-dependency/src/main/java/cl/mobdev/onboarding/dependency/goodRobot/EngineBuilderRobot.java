@@ -1,21 +1,28 @@
 package cl.mobdev.onboarding.dependency.goodRobot;
 
-import cl.mobdev.onboarding.dependency.domain.Engine;
+import cl.mobdev.onboarding.dependency.goodRobot.domain.Capacity;
+import cl.mobdev.onboarding.dependency.goodRobot.domain.Engine;
 
 public class EngineBuilderRobot {
 
-  Engine makeANewEngine(int capacity) {
+  private final Capacity capacity;
+
+  public EngineBuilderRobot(Capacity capacity) {
+    this.capacity = capacity;
+  }
+
+  Engine makeANewEngine() {
 
     //initialize building a new Engine
-    Engine newEngine = new Engine();
+    Engine engine = new Engine();
 
     //setting capacity
-    newEngine.setCapacity(capacity);
+    engine.setCapacity(this.capacity.maximumCapacityInCentimetersCubic());
 
     //calculation total weight
-    newEngine.setWeight(weightCalculation(capacity));
+    engine.setWeight(weightCalculation(this.capacity.maximumCapacityInCentimetersCubic()));
 
-    return newEngine;
+    return engine;
   }
 
   private double weightCalculation(int capacity) {
