@@ -1,4 +1,4 @@
-# Proyecto muldimodulo que contiene ejemplos de los principios S.O.L.I.D.
+# Proyecto multimodulo que contiene ejemplos de los principios S.O.L.I.D.
 
 Se usaran las definiciones de [Wikipedia](https://es.wikipedia.org/wiki/SOLID)
 
@@ -7,8 +7,8 @@ Para entender los principios SOLID se usara una analogia de robots en una fabric
 ### Estructura
 
 La estructura de los ejemplos es la siguiente, primero se mostraran casos que intencionalmente no cumplen con los 
-principios, luego habra un cambio de escenario que nos hara remplatear el primer caso y nos muestre un problema, 
-entonces habra una solucion propuesta.
+principios, luego habra un cambio de escenario que nos hara remplatear el primer ejemplo y nos muestre un problema, 
+entonces habra una solucion propuesta usando un principio.
 
 En cada uno de los modulos se puede plantear uno o mas principios para resolver un problema, pero se hara enfasis 
 en el que se este analizando
@@ -294,7 +294,7 @@ El robot supera exitosamente los test, pero ha llegado una nueva informacion:
 > lo antes posible y asi satisfacer la creciente demanda por este tipo de modelo"_
 
 Este nuevo escenario obliga a crear un nuevo test para saber si nuestro robot es capaz de satisfacer
-el nuevo requerimiento, pero falla.
+el nuevo requerimiento, pero el test falla.
 
 ```java
   void should_return_correct_cost_of_wheels_when_calculate_2_coupe_car() {
@@ -476,7 +476,7 @@ public class Motorcycle extends Vehicle {
 }
 ```
 
-y un nuevo test para saber si nuestro robot es capaz de satisfacer el nuevo requerimiento.
+y un nuevo test para saber si nuestro robot es capaz de satisfacer el nuevo requerimiento, pero el test falla.
 
 ```java
   @Test
@@ -491,10 +491,13 @@ y un nuevo test para saber si nuestro robot es capaz de satisfacer el nuevo requ
     assertEquals(costExpected, totalCost);
   }
 ```
+````java
+  "Motorbikes don't have security belts"
+````
 
 #### El problema:
 El robot `VehicleInventoryRobot` recibe como parametro un objeto `Vehicle`, cuando se envia un objeto `Car` funciona 
-porque `Car` es hija de `Vehicule`, pero si se envia `Motorcycle`, a pesar de tambien ser hija de `Vehicule`, 
+porque es hija de `Vehicule`, pero si se envia `Motorcycle`, a pesar de tambien ser hija de `Vehicule`, 
 lanza una excepcion, por lo tanto viola el principio de sustitucion de Liskov.
 
 
@@ -538,7 +541,7 @@ public class Motorcycle extends Vehicle {
 }
 ```
 
-Refactorizar el robot `VehicleInventoryRobot`
+y refactorizar el robot `VehicleInventoryRobot`
 
 [VehicleInventoryRobot](3-liskov/src/main/java/cl/mobdev/onboarding/liskov/goodRobot/VehicleInventoryRobot.java)
 
@@ -626,7 +629,7 @@ Modulo: [4-interface](4-interface/README.md)
 
 Tenemos un nuevo modelo de entidades e interfaces que es usado por todos los robots de la fabrica.
 
-Se ha definido una interfaz general.
+Se ha definido una interfaz general
 
 ```java
 public interface Mobilizable {
@@ -638,7 +641,7 @@ public interface Mobilizable {
 }
 ```
 
-Ademas se define la clase `Car`, juntas modelaran todos los tipos de automoviles.
+y ademas se define la clase `Car`, juntas modelaran los distintos tipos de modelos de automoviles.
 
 [Car](4-Interface/src/main/java/cl/mobdev/onboarding/interfaces/domain/Car.java)
 ````java
@@ -835,7 +838,7 @@ public class Hybrid extends Car implements Mobilizable, ElectricCapacity, FuelCa
 Modulo: [5-dependency](5-dependency/README.md)
 
 Los robots `CarBuilderRobot` y `EngineBuilderRobot` son los robots mas eficientes de la fábrica y juntos construyen 
-una auto con motor de 1.600cc de capacidad, que es la version mas vendida de la compañia.
+los autos con motor de 1.600cc de capacidad, que es la version mas vendida de la compañia.
 
 [CarBuilderRobot](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/badRobot/CarBuilderRobot.java)
 ```java
