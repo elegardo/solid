@@ -1,8 +1,20 @@
 # Proyecto muldimodulo que contiene ejemplos de los principios S.O.L.I.D.
 
-Para entender los principios SOLID imaginemos que trabajamos construyendo robots en una prestigiosa fabrica de autos.
-
 Se usaran las definiciones de [Wikipedia](https://es.wikipedia.org/wiki/SOLID)
+
+Para entender los principios SOLID se usara una analogia de robots en una fabrica de autos.
+
+### Estructura
+
+La estructura de los ejemplos es la siguiente, primero se mostraran casos que intencionalmente no cumplen con los 
+principios, luego habra un cambio de escenario que nos hara remplatear el primer caso y nos muestre un problema, 
+entonces habra una solucion propuesta.
+
+En cada uno de los modulos se puede plantear uno o mas principios para resolver un problema, pero se hara enfasis 
+en el que se este analizando
+
+Los modulos son independientes, esto quiere decir que en cada uno el mismo robot puede ser distinto, osea, un problema 
+que se soluciono en un modulo puede que en otro aun permanezca solo para efectos de demostracion de otro principio.
 
 ### Single Responsibility
 
@@ -158,25 +170,6 @@ satisfacer los nuevos requerimientos de la empresa.
     assertEquals(colorExpected, carPainted.getColor());
   }
 
-  @Test
-  void should_a_painted_a_new_car_color_blue() {
-    String colorExpected = "blue";
-
-    Car newCar = carBuilderRobot.makeANewCar();
-    Car carPainted = carPainterRobot.paintBlueColor(newCar);
-
-    assertEquals(colorExpected, carPainted.getColor());
-  }
-
-  @Test
-  void should_a_painted_a_new_car_color_black() {
-    String colorExpected = "black";
-
-    Car newCar = carBuilderRobot.makeANewCar();
-    Car carPainted = carPainterRobot.paintBlackColor(newCar);
-    
-    assertEquals(colorExpected, carPainted.getColor());
-  }
 ```
 
 [EngineBuilderRobotTest](1-single/src/test/java/cl/mobdev/onboarding/single/goodRobot/EngineBuilderRobotTest.java)
@@ -235,23 +228,26 @@ public class CarInventoryRobot {
   private final int beltsByOffRoadCar = 4;
 
   public int calculateTotalCost(Car car) {
-    int totalCost = 0;
 
     if ("sedan".equals(car.getModel())) {
-      
-      totalCost = costByWheel * wheelsBySedanCar + costBySecurityBelt * beltsBySedanCar;
-      
+
+      return costByWheel * wheelsBySedanCar + costBySecurityBelt * beltsBySedanCar;
+
     } else if ("suv".equals(car.getModel())) {
-      
-      totalCost = costByWheel * wheelsBySuvCar + costBySecurityBelt * beltsBySuvCar;
-      
+
+      return costByWheel * wheelsBySuvCar + costBySecurityBelt * beltsBySuvCar;
+
     } else if ("offRoad".equals(car.getModel())) {
-      
-      totalCost = costByWheel * wheelsByOffRoadCar + costBySecurityBelt * beltsByOffRoadCar;
-      
+
+      return costByWheel * wheelsByOffRoadCar + costBySecurityBelt * beltsByOffRoadCar;
+
+    }
+    else {
+
+      throw new RuntimeException("Robot CarInventoryRobot don't can calculate cost for this model");
+
     }
 
-    return totalCost;
   }
 }
 ```
@@ -298,13 +294,23 @@ El robot supera exitosamente los test, pero ha llegado una nueva informacion:
 > lo antes posible y asi satisfacer la creciente demanda por este tipo de modelo"_
 
 Este nuevo escenario obliga a crear un nuevo test para saber si nuestro robot es capaz de satisfacer
-el nuevo requerimiento.
+el nuevo requerimiento, pero falla.
 
 ```java
-  @Test
   void should_return_correct_cost_of_wheels_when_calculate_2_coupe_car() {
-      fail("Robot CarInventoryRobot don't can calculate cost for coupe car!");
+    int costExpected = 420;
+
+    Car coupeCar1 = carBuilderRobot.makeANewCoupe();
+    Car coupeCar2 = carBuilderRobot.makeANewCoupe();
+
+    int totalCost = carInventoryRobot.calculateTotalCost(coupeCar1)
+    + carInventoryRobot.calculateTotalCost(coupeCar2);
+
+    assertEquals(costExpected, totalCost);
   }
+```
+```java
+  "Robot CarInventoryRobot don't can calculate cost for this model"
 ```
 
 #### El problema:
@@ -828,52 +834,249 @@ public class Hybrid extends Car implements Mobilizable, ElectricCapacity, FuelCa
 
 Modulo: [5-dependency](5-dependency/README.md)
 
-El robot `CarBuilderRobot` es el robot mas eficiente de la fabrica y produce la version mas vendida.
+Los robots `CarBuilderRobot` y `EngineBuilderRobot` son los robots mas eficientes de la fábrica y juntos construyen 
+una auto con motor de 1.600cc de capacidad, que es la version mas vendida de la compañia.
 
+[CarBuilderRobot](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/badRobot/CarBuilderRobot.java)
 ```java
-public class CarBuilderRobot {
-
-  Car makeANewCar() {
+  public Car makeANewCar(Engine engine) {
 
     //initialize building a new Car
     Car newCar = new Car();
-
-    //make a new engine
-    Engine engine = makeANewEngine();
 
     //install new engine in car
     newCar.setEngine(engine);
 
     return newCar;
-  }
+    }
+```
 
-  private Engine makeANewEngine() {
-    final int capacityInCentimetersCubic = 1600;
-    final double weightInKilograms = capacityInCentimetersCubic * 0.1;
+[EngineBuilderRobot](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/badRobot/EngineBuilderRobot.java)
+```java
+public class EngineBuilderRobot {
 
+  public Engine makeANewEngine(Capacity1600CC capacity) {
+
+    //initialize building a new Engine
     Engine engine = new Engine();
-    engine.setCapacity(capacityInCentimetersCubic);
-    engine.setWeight(weightInKilograms);
+
+    //setting capacity
+    engine.setCapacity(capacity);
+
+    //calculation total weight
+    engine.setWeight(weightCalculation(capacity.maximumCapacityInCentimetersCubic()));
 
     return engine;
+  }
+
+  private double weightCalculation(int capacity) {
+    return capacity * 0.1;
   }
 
 }
 ```
 
+Como siempre, los test de `EngineBuilderRobot` nos permite comprobar que todo funciona perfecto
+
+[EngineBuilderRobotTest](5-dependency/src/test/java/cl/mobdev/onboarding/dependency/badRobot/EngineBuilderRobotTest.java)
+````java
+  @Test
+  void should_a_make_a_new_engine_with_1600cc_capacity() {
+    int capacityExpected = 1600;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine(new Capacity1600CC());
+
+    assertEquals(capacityExpected, newEngine1600CC.getCapacity().maximumCapacityInCentimetersCubic());
+  }
+
+  @Test
+  void should_a_make_a_new_engine_with_160_weigh() {
+    int weighExpected = 160;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine(new Capacity1600CC());
+
+    assertEquals(weighExpected, newEngine1600CC.getWeight());
+  }
+````
+
 La fama de este automovil es tal que permite crear nuevos negocios:
 
-> _"El area de negocios ha cerrado un contrato gubernamental en el que se comprometen a vender 
-> unas 10.000 unidades de autos nuevos, pero debido a una necesidad especifica del gobierno 
-> los motores deben tener una capacidad de 2.000 cc."_
+> _"El area de negocios ha cerrado un contrato gubernamental en el que nos comprometemos a venderles 
+> 10.000 unidades de nuestro auto mas vendido, pero con un requerimiento especial, los motores 
+> deben tener una capacidad de 2.000 cc."_
 
-Esta informacion nos obliga a modificar el motor que usa este auto.
+Al querer comprobar si los robots son capacez de construir los mismos autos pero con un motor
+de mayor capacidad, nos damos cuenta de los suguiente:
+
+````java
+  @Test
+  void should_a_make_a_new_engine_of_2000cc_capacity() {
+    fail("Robot EngineBuilderRobot don't build engines with this capacity!");
+  }
+````
 
 
 #### El problema:
-El robot `CarBuilderRobot` agrupa todas funcionalidades lo que provoca que los nuevos autos 
-con motores con distintas capacidades no puedan ser construidos.
-
+El robot `EngineBuilderRobot` tiene una dependencia fuerte con la clase `Capacity1600CC`, esto
+impide que pueda construir motores con capacidades distintas.
 
 #### La solucion:
-Separar responsabilidades y usar la inversion de control y/o inyeccion de dependencias.
+Usar inyeccion de dependencias para que `EngineBuilderRobot` dependa de una interfaz en vez de depender de 
+una implementacion en especifico.
+
+Si creamos una interfaz
+
+[Capacity](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/goodRobot/domain/Capacity.java)
+````java
+public interface Capacity {
+
+  int maximumCapacityInCentimetersCubic();
+
+}
+````
+
+y ahora `EngineBuilderRobot` recibe como parametro esta nueva interfaz
+
+[EngineBuilderRobot](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/goodRobot/EngineBuilderRobot.java)
+````java
+public class EngineBuilderRobot {
+
+  public Engine makeANewEngine(Capacity capacity) {
+
+    //initialize building a new Engine
+    Engine engine = new Engine();
+
+    //setting capacity
+    engine.setCapacity(capacity);
+
+    //calculation total weight
+    engine.setWeight(weightCalculation(capacity.maximumCapacityInCentimetersCubic()));
+
+    return engine;
+  }
+
+  private double weightCalculation(int capacity) {
+    return capacity * 0.1;
+  }
+
+}
+````
+
+Podemos crear distintas capacidades para distintos tipos de motores
+
+[Capacity1600CC](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/goodRobot/domain/Capacity1600CC.java)
+````java
+public class Capacity1600CC implements Capacity {
+
+  @Override
+  public int maximumCapacityInCentimetersCubic() {
+    return 1600;
+  }
+
+}
+````
+
+[Capacity2000CC](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/goodRobot/domain/Capacity2000CC.java)
+````java
+public class Capacity2000CC implements Capacity {
+
+  @Override
+  public int maximumCapacityInCentimetersCubic() {
+    return 2000;
+  }
+
+}
+````
+
+[Capacity2500CC](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/goodRobot/domain/Capacity2500CC.java)
+````java
+public class Capacity2500CC implements Capacity {
+
+  @Override
+  public int maximumCapacityInCentimetersCubic() {
+    return 2500;
+  }
+
+}
+````
+
+y si comprobamos el funcionamiento del robot, ahora vemos que es capaz de construir motores de cualquier tipo de capacidad.
+
+[EngineBuilderRobotTest](5-dependency/src/test/java/cl/mobdev/onboarding/dependency/goodRobot/EngineBuilderRobotTest.java)
+````java
+public class EngineBuilderRobotTest {
+
+  private EngineBuilderRobot engineBuilderRobot;
+
+  @Test
+  void should_a_make_a_new_engine_with_1600cc_capacity() {
+    int capacityExpected = 1600;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine(new Capacity1600CC());
+
+    assertEquals(capacityExpected, newEngine1600CC.getCapacity().maximumCapacityInCentimetersCubic());
+  }
+
+  @Test
+  void should_a_make_a_new_engine_with_160_weigh() {
+    int weighExpected = 160;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine(new Capacity1600CC());
+
+    assertEquals(weighExpected, newEngine1600CC.getWeight());
+  }
+
+  /*
+   * El robot EngineBuilderRobot usa inyeccion de dependecias para construir motores
+   * con distintas capacidades. Al aceptar una interfaz es posible inyectar cualquier 
+   * dependencia que implemente esa interfaz sin ser necesario un cambio en la programacion 
+   * de EngineBuilderRobot. Por lo tanto, es posible delegar la responsabilidad de 
+   * la capacidad en distintas clases que pueden ser inyectadas en tiempo de construccion del motor.
+   */
+  
+  @Test
+  void should_a_make_a_new_engine_with_2000cc_capacity() {
+    int capacityExpected = 2000;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine2000CC = engineBuilderRobot.makeANewEngine(new Capacity2000CC());
+
+    assertEquals(capacityExpected, newEngine2000CC.getCapacity().maximumCapacityInCentimetersCubic());
+  }
+
+  @Test
+  void should_a_make_a_new_engine_with_200_weigh() {
+    int weighExpected = 200;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine2000CC = engineBuilderRobot.makeANewEngine(new Capacity2000CC());
+
+    assertEquals(weighExpected, newEngine2000CC.getWeight());
+  }
+
+  @Test
+  void should_a_make_a_new_engine_with_2500cc_capacity() {
+    int capacityExpected = 2500;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine2500CC = engineBuilderRobot.makeANewEngine(new Capacity2500CC());
+
+    assertEquals(capacityExpected, newEngine2500CC.getCapacity().maximumCapacityInCentimetersCubic());
+  }
+
+  @Test
+  void should_a_make_a_new_engine_with_250_weigh() {
+    int weighExpected = 250;
+
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine2500CC = engineBuilderRobot.makeANewEngine(new Capacity2500CC());
+
+    assertEquals(weighExpected, newEngine2500CC.getWeight());
+  }
+  
+}
+````

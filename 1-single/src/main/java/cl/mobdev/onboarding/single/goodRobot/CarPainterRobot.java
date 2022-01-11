@@ -13,22 +13,4 @@ public class CarPainterRobot {
     return car;
   }
 
-  public Car paintBlueColor(Car car) {
-    final String color = "blue";
-
-    //paint a car with available color
-    car.setColor(color);
-
-    return car;
-  }
-
-  public Car paintBlackColor(Car car) {
-    final String color = "black";
-
-    //paint a car with available color
-    car.setColor(color);
-
-    return car;
-  }
-
 }

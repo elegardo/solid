@@ -17,22 +17,25 @@ public class CarInventoryRobot {
   private final int beltsByOffRoadCar = 4;
 
   public int calculateTotalCost(Car car) {
-    int totalCost = 0;
 
     if ("sedan".equals(car.getModel())) {
 
-      totalCost = costByWheel * wheelsBySedanCar + costBySecurityBelt * beltsBySedanCar;
+      return costByWheel * wheelsBySedanCar + costBySecurityBelt * beltsBySedanCar;
 
     } else if ("suv".equals(car.getModel())) {
 
-      totalCost = costByWheel * wheelsBySuvCar + costBySecurityBelt * beltsBySuvCar;
+      return costByWheel * wheelsBySuvCar + costBySecurityBelt * beltsBySuvCar;
 
     } else if ("offRoad".equals(car.getModel())) {
 
-      totalCost = costByWheel * wheelsByOffRoadCar + costBySecurityBelt * beltsByOffRoadCar;
+      return costByWheel * wheelsByOffRoadCar + costBySecurityBelt * beltsByOffRoadCar;
+
+    }
+    else {
+
+      throw new RuntimeException("Robot CarInventoryRobot don't can calculate cost for this model");
 
     }
 
-    return totalCost;
   }
 }

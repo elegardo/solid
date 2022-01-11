@@ -1,7 +1,6 @@
 package cl.mobdev.onboarding.open.badRobot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import cl.mobdev.onboarding.open.badRobot.domain.Car;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,14 +55,15 @@ public class CarInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_of_wheels_when_calculate_2_coupe_car() {
-    /*
-     * Si se quiere que CarInventoryRobot calcule el costo total
-     * de un auto distinto a sedan, suv o offRoad, entonces se debe
-     * modificar la programación del robot CarInventoryRobot e incluir otros
-     * modelos, esto rompe el principio de cerrado para modificaciones
-     */
+    int costExpected = 420;
 
-    fail("Robot CarInventoryRobot don't can calculate cost for coupe car!");
+    Car coupeCar1 = carBuilderRobot.makeANewCoupe();
+    Car coupeCar2 = carBuilderRobot.makeANewCoupe();
+
+    int totalCost = carInventoryRobot.calculateTotalCost(coupeCar1)
+        + carInventoryRobot.calculateTotalCost(coupeCar2);
+
+    assertEquals(costExpected, totalCost);
   }
 
 }

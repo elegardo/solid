@@ -23,19 +23,19 @@ public class CarBuilderRobotTest {
   void should_a_make_a_new_car_with_engine_of_1600cc_capacity() {
     int capacityExpected = 1600;
 
-    engineBuilderRobot = new EngineBuilderRobot(new Capacity1600CC());
-    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine();
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine(new Capacity1600CC());
     Car newCar = carBuilderRobot.makeANewCar(newEngine1600CC);
 
-    assertEquals(capacityExpected, newCar.getEngine().getCapacity());
+    assertEquals(capacityExpected, newCar.getEngine().getCapacity().maximumCapacityInCentimetersCubic());
   }
 
   @Test
   void should_a_make_a_new_car_with_engine_of_160_weight() {
     int weightExpected = 160;
 
-    engineBuilderRobot = new EngineBuilderRobot(new Capacity1600CC());
-    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine();
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine1600CC = engineBuilderRobot.makeANewEngine(new Capacity1600CC());
     Car newCar = carBuilderRobot.makeANewCar(newEngine1600CC);
 
     assertEquals(weightExpected, newCar.getEngine().getWeight());
@@ -53,11 +53,11 @@ public class CarBuilderRobotTest {
     int capacityExpected = 2000;
     int weightExpected = 200;
 
-    engineBuilderRobot = new EngineBuilderRobot(new Capacity2000CC());
-    Engine newEngine2000CC = engineBuilderRobot.makeANewEngine();
+    engineBuilderRobot = new EngineBuilderRobot();
+    Engine newEngine2000CC = engineBuilderRobot.makeANewEngine(new Capacity2000CC());
     Car newCar = carBuilderRobot.makeANewCar(newEngine2000CC);
 
-    assertEquals(capacityExpected, newCar.getEngine().getCapacity());
+    assertEquals(capacityExpected, newCar.getEngine().getCapacity().maximumCapacityInCentimetersCubic());
     assertEquals(weightExpected, newCar.getEngine().getWeight());
   }
 

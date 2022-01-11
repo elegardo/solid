@@ -1,11 +1,11 @@
-package cl.mobdev.onboarding.dependency.goodRobot;
+package cl.mobdev.onboarding.dependency.badRobot;
 
-import cl.mobdev.onboarding.dependency.goodRobot.domain.Capacity;
-import cl.mobdev.onboarding.dependency.goodRobot.domain.Engine;
+import cl.mobdev.onboarding.dependency.badRobot.domain.Capacity1600CC;
+import cl.mobdev.onboarding.dependency.badRobot.domain.Engine;
 
 public class EngineBuilderRobot {
 
-  public Engine makeANewEngine(Capacity capacity) {
+  public Engine makeANewEngine(Capacity1600CC capacity) {
 
     //initialize building a new Engine
     Engine engine = new Engine();

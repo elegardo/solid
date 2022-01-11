@@ -5,7 +5,7 @@ import cl.mobdev.onboarding.dependency.goodRobot.domain.Engine;
 
 public class CarBuilderRobot {
 
-  Car makeANewCar(Engine engine) {
+  public Car makeANewCar(Engine engine) {
 
     //initialize building a new Car
     Car newCar = new Car();

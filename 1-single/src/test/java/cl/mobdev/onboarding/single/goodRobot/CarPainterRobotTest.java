@@ -33,24 +33,4 @@ public class CarPainterRobotTest {
     assertEquals(colorExpected, carPainted.getColor());
   }
 
-  @Test
-  void should_a_painted_a_new_car_color_blue() {
-    String colorExpected = "blue";
-
-    Car newCar = carBuilderRobot.makeANewCar();
-    Car carPainted = carPainterRobot.paintBlueColor(newCar);
-
-    assertEquals(colorExpected, carPainted.getColor());
-  }
-
-  @Test
-  void should_a_painted_a_new_car_color_black() {
-    String colorExpected = "black";
-
-    Car newCar = carBuilderRobot.makeANewCar();
-    Car carPainted = carPainterRobot.paintBlackColor(newCar);
-
-    assertEquals(colorExpected, carPainted.getColor());
-  }
-
 }

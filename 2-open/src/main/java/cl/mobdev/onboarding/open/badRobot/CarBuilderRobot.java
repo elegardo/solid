@@ -23,5 +23,10 @@ public class CarBuilderRobot {
     return newCar;
   }
 
+  public Car makeANewCoupe() {
+    Car newCar = new Car();
+    newCar.setModel("coupe");
+    return newCar;
+  }
 
 }
