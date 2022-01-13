@@ -1,4 +1,4 @@
-# Proyecto multimodulo que contiene ejemplos de los principios S.O.L.I.D.
+## Proyecto multimodulo que contiene ejemplos de los principios S.O.L.I.D.
 
 Se usaran las definiciones de [Wikipedia](https://es.wikipedia.org/wiki/SOLID)
 
@@ -16,14 +16,17 @@ en el que se este analizando
 Los modulos son independientes, esto quiere decir que en cada uno el mismo robot puede ser distinto, osea, un problema 
 que se soluciono en un modulo puede que en otro aun permanezca solo para efectos de demostracion de otro principio.
 
-### Single Responsibility
+---
+
+# Single Responsibility
 
 > "Un objeto solo debería tener una única responsabilidad".
 
 Modulo: [1-single](1-single/README.md)
 
-Supongamos que hemos contruido un nuevo robot que construye autos llamado [CarBuilderRobot](1-single/src/main/java/cl/mobdev/onboarding/single/badRobot/CarBuilderRobot.java)
+Supongamos que hemos construido un nuevo robot que fabrica autos.
 
+[CarBuilderRobot](1-single/src/main/java/cl/mobdev/onboarding/single/badRobot/CarBuilderRobot.java)
 ```java
 public class CarBuilderRobot {
 
@@ -57,7 +60,7 @@ public class CarBuilderRobot {
 }
 ```
 
-Este robot tiene el metodo `makeANewCar()` que construye un auto pintado y con un motor instalado, totalmente funcional 
+Este robot tiene el método `makeANewCar()` que construye un auto pintado y con un motor instalado, totalmente funcional 
 y listo para salir de la linea de montaje.
 
 Una vez terminado el robot, nuestro supervisor desea someterlo a una serie de pruebas para certificar que 
@@ -108,13 +111,13 @@ el nuevo requerimiento.
   }
 ```
 
-#### El problema:
+### El problema:
 Para construir un motor el robot `CarBuilderRobot` primero debe construir un auto, al no tener 
 responsabilidades separadas existe dependencias entre las distintas actividades, lo que provoca
 que sea muy poco factible usar el robot para construir solo motores.
 
 
-#### La solucion:
+### La solución:
 Crear robots con responsabilidades distintas
 
 * [CarBuilderRobot](1-single/src/main/java/cl/mobdev/onboarding/single/goodRobot/CarBuilderRobot.java)
@@ -202,7 +205,8 @@ satisfacer los nuevos requerimientos de la empresa.
 ```
 
 ---
-## Open / Closed
+
+# Open / Closed
 
 > "Las entidades de software deben estar abiertas para su extensión, pero cerradas para su modificación".
 
@@ -313,12 +317,12 @@ el nuevo requerimiento, pero el test falla.
   "Robot CarInventoryRobot don't can calculate cost for this model"
 ```
 
-#### El problema:
+### El problema:
 Si se quiere que [CarInventoryRobot](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/CarInventoryRobot.java) calcule el costo total de un auto de tipo distinto a `sedan`, `suv` u `offRoad`,
 entonces se debe modificar la programación del robot e incluir otros modelos, esto rompe el principio
 de cerrado para modificaciones.
 
-#### La solucion:
+### La solucion:
 Primero traspasar la responsabilidad del numero de ruedas y cinturones de seguridad a cada tipo de auto, crear entidades
 especificas de 
 [SedanCar](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/SedanCar.java), 
@@ -381,7 +385,7 @@ Al someterlo nuevamente a los mismos tests demuestra que puede abarcar el nuevo 
 
 ---
 
-## Liskov Substitution
+# Liskov Substitution
 
 > "Los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa".
 
@@ -495,13 +499,13 @@ y un nuevo test para saber si nuestro robot es capaz de satisfacer el nuevo requ
   "Motorbikes don't have security belts"
 ````
 
-#### El problema:
+### El problema:
 El robot `VehicleInventoryRobot` recibe como parametro un objeto `Vehicle`, cuando se envia un objeto `Car` funciona 
 porque es hija de `Vehicule`, pero si se envia `Motorcycle`, a pesar de tambien ser hija de `Vehicule`, 
 lanza una excepcion, por lo tanto viola el principio de sustitucion de Liskov.
 
 
-#### La solucion:
+### La solucion:
 Modelar nuevas entidades
 
 [Vehicle](3-liskov/src/main/java/cl/mobdev/onboarding/liskov/goodRobot/domain/Vehicle.java)
@@ -726,12 +730,12 @@ public class Electric extends Car implements Mobilizable {
 }
 
 ````
-#### El problema:
+### El problema:
 La interfaz `Mobilizable` agrupa todas funcionalidades que deberia tener un automovil a combustible
 lo que provoca que los nuevos autos electricos deban implementar funcionalidades que no deben.
 
 
-#### La solucion:
+### La solucion:
 Crear nuevas interfaces mas especificas. 
 
 [Mobilizable](4-Interface/src/main/java/cl/mobdev/onboarding/interfaces/goodRobot/Mobilizable.java)
@@ -831,7 +835,7 @@ public class Hybrid extends Car implements Mobilizable, ElectricCapacity, FuelCa
 
 ---
 
-## Dependency Inversion
+# Dependency Inversion
 
 > Depender de abstracciones, no depender de implementaciones.
 
@@ -921,11 +925,11 @@ de mayor capacidad, nos damos cuenta de los suguiente:
 ````
 
 
-#### El problema:
+### El problema:
 El robot `EngineBuilderRobot` tiene una dependencia fuerte con la clase `Capacity1600CC`, esto
 impide que pueda construir motores con capacidades distintas.
 
-#### La solucion:
+### La solucion:
 Usar inyeccion de dependencias para que `EngineBuilderRobot` dependa de una interfaz en vez de depender de 
 una implementacion en especifico.
 
