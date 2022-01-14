@@ -331,10 +331,26 @@ especificas de
 [CoupeCar](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/CoupeCar.java) 
 que hereden de la entidad 
 [Car](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/Car.java). 
-De esta manera el robot `CarInventoryRobot` solo se preocupa de calcular el costo de cualquier
+
+
+Ademas refactorizamos el robot `CarInventoryRobot` para que de esta manera solo se preocupe de calcular el costo de cualquier
 tipo de automovil que herede de la entidad `Car`.
 
-Al someterlo nuevamente a los mismos tests demuestra que puede abarcar el nuevo escenario y satisfacer el requerimieto.
+[CarInventoryRobot](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/CarInventoryRobot.java)
+````java
+public class CarInventoryRobot {
+
+  private final int costByWheel = 50;
+  private final int costBySecurityBelt = 5;
+
+  public int calculateTotalCost(Car car) {
+    return costBySecurityBelt * car.getNumberOfSecurityBelts() + costByWheel * car.getNumberOfWheels();
+  }
+
+}
+````
+
+Al someterlo nuevamente a los mismos tests demuestra que puede abarcar el nuevo escenario y satisfacer el requerimiento.
 
 [CarInventoryRobotTest](2-open/src/test/java/cl/mobdev/onboarding/open/goodRobot/CarInventoryRobotTest.java)
 ```java
