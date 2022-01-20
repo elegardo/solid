@@ -747,8 +747,9 @@ public class Electric extends Car implements Mobilizable {
 
 ````
 ### El problema:
-La interfaz `Mobilizable` agrupa todas funcionalidades que deberia tener un automovil a combustible
-lo que provoca que los nuevos autos electricos deban implementar funcionalidades que no deben.
+La interfaz `Mobilizable` agrupa todas funcionalidades de un automovil a combustible, lo que no necesarimente
+tienen todos los tipos de autos, lo que provoca que los nuevos autos electricos deban implementar funcionalidades 
+que no deben.
 
 
 ### La solucion:
@@ -871,7 +872,7 @@ los autos con motor de 1.600cc de capacidad, que es la version mas vendida de la
     newCar.setEngine(engine);
 
     return newCar;
-    }
+  }
 ```
 
 [EngineBuilderRobot](5-dependency/src/main/java/cl/mobdev/onboarding/dependency/badRobot/EngineBuilderRobot.java)
