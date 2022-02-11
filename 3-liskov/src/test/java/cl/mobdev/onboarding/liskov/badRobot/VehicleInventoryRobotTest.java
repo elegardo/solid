@@ -22,7 +22,7 @@ public class VehicleInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_when_calculate_2_cars() {
-    int costExpected = 450;
+    int costExpected = 480;
 
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
@@ -35,7 +35,7 @@ public class VehicleInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_when_calculate_3_cars() {
-    int costExpected = 675;
+    int costExpected = 720;
 
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
@@ -64,7 +64,7 @@ public class VehicleInventoryRobotTest {
      * lanza una excepcion, por lo tanto viola el principio de sustitucion de Liskov
      */
 
-    int costExpected = 100;
+    int costExpected = 20;
 
     Motorcycle motorcycle = motorcycleBuilderRobot.makeANewMotorcycle();
 

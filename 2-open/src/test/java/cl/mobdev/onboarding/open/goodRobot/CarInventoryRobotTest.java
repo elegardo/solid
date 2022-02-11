@@ -22,7 +22,7 @@ public class CarInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_when_calculate_3_sedan_cars() {
-    int costExpected = 675;
+    int costExpected = 600;
 
     SedanCar sedanCar1 = carBuilderRobot.makeANewSedan();
     SedanCar sedanCar2 = carBuilderRobot.makeANewSedan();
@@ -37,7 +37,7 @@ public class CarInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_when_calculate_1_sedan_car_1_suv_car_1_offRoad_car() {
-    int costExpected = 720;
+    int costExpected = 550;
 
     SedanCar sedanCar = carBuilderRobot.makeANewSedan();
     SuvCar suvCar = carBuilderRobot.makeANewSuvCar();
@@ -58,7 +58,7 @@ public class CarInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_of_wheels_when_calculate_2_coupe_car() {
-    int costExpected = 420;
+    int costExpected = 200;
 
     CoupeCar coupeCar1 = carBuilderRobot.makeANewCoupeCar();
     CoupeCar coupeCar2 = carBuilderRobot.makeANewCoupeCar();

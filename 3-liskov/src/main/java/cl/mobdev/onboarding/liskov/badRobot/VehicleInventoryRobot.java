@@ -4,10 +4,10 @@ import cl.mobdev.onboarding.liskov.badRobot.domain.Vehicle;
 
 public class VehicleInventoryRobot {
 
-  private final int costByWheel = 50;
-  private final int costBySecurityBelt = 5;
+  private final int costByWheel = 10;
+  private final int costByDoor = 50;
 
   public int calculateTotalCost(Vehicle vehicle) {
-    return costBySecurityBelt * vehicle.numberOfSecurityBelt() + costByWheel * vehicle.numberOfWheels();
+    return costByWheel * vehicle.numberOfWheels() + costByDoor * vehicle.numberOfDoors();
   }
 }

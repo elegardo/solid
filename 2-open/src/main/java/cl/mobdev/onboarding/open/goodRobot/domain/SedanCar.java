@@ -2,9 +2,10 @@ package cl.mobdev.onboarding.open.goodRobot.domain;
 
 public class SedanCar extends Car {
 
-  public SedanCar(int numberOfWheels, int numberOfSecurityBelts) {
-    super.setNumberOfWheels(numberOfWheels);
-    super.setNumberOfSecurityBelts(numberOfSecurityBelts);
+  private static final int NUMBER_OF_DOORS = 4;
+
+  public SedanCar() {
+    super(NUMBER_OF_DOORS);
   }
 
 }

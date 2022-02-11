@@ -4,6 +4,6 @@ abstract public class Vehicle {
 
   public abstract int numberOfWheels();
 
-  public abstract int numberOfSecurityBelt();
+  public abstract int numberOfDoors();
 
 }

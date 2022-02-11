@@ -5,28 +5,27 @@ import cl.mobdev.onboarding.open.badRobot.domain.Car;
 public class CarBuilderRobot {
 
   public Car makeANewSedan() {
-    Car newCar = new Car();
-    newCar.setModel("sedan");
-    return newCar;
+    String model = "sedan";
+
+    return new Car(model);
   }
 
   public Car makeANewSuv() {
-    Car newCar = new Car();
-    newCar.setModel("suv");
-    return newCar;
+    String model = "suv";
+
+    return new Car(model);
   }
 
-
   public Car makeANewOffRoad() {
-    Car newCar = new Car();
-    newCar.setModel("offRoad");
-    return newCar;
+    String model = "offRoad";
+
+    return new Car(model);
   }
 
   public Car makeANewCoupe() {
-    Car newCar = new Car();
-    newCar.setModel("coupe");
-    return newCar;
+    String model = "coupe";
+
+    return new Car(model);
   }
 
 }

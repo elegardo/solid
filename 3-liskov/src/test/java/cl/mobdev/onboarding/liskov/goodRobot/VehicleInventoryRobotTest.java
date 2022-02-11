@@ -22,33 +22,33 @@ public class VehicleInventoryRobotTest {
 
   @Test
   void should_return_correct_cost_when_calculate_2_cars() {
-    int costExpected = 450;
+    int costExpected = 440;
 
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
 
     int totalCost = vehicleInventoryRobot.calculateTotalCostOfWheels(car1)
-        + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car1)
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car1)
         + vehicleInventoryRobot.calculateTotalCostOfWheels(car2)
-        + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car2);
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car2);
 
     assertEquals(costExpected, totalCost);
   }
 
   @Test
   void should_return_correct_cost_when_calculate_3_cars() {
-    int costExpected = 675;
+    int costExpected = 660;
 
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
     Car car3 = carBuilderRobot.makeANewCar();
 
     int totalCost = vehicleInventoryRobot.calculateTotalCostOfWheels(car1)
-        + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car1)
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car1)
         + vehicleInventoryRobot.calculateTotalCostOfWheels(car2)
-        + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car2)
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car2)
         + vehicleInventoryRobot.calculateTotalCostOfWheels(car3)
-        + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car3);
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car3);
 
     assertEquals(costExpected, totalCost);
   }

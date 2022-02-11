@@ -68,6 +68,8 @@ todo funciona como se espera, asi que comienza a desarrollar varios test para pr
 
 [CarBuilderRobotTest](1-single/src/test/java/cl/mobdev/onboarding/single/badRobot/CarBuilderRobotTest.java)
 ```java
+  ...
+
   @Test
   void should_a_make_a_new_car_red_color() {
     String colorExpected = "red";
@@ -94,6 +96,13 @@ todo funciona como se espera, asi que comienza a desarrollar varios test para pr
 
     assertEquals(weightExpected, newCar.getEngine().getWeight());
   }
+
+  --------
+
+  Test Results:
+  ✓ should_a_make_a_new_car_red_color()
+  ✓ should_a_make_a_new_car_with_engine_capacity_1600()
+  ✓ should_a_make_a_new_car_with_engine_weight_equal_to_160()
 ```
 
 El robot supera exitosamente los test del supervisor, pero ha llegado una nueva informacion:
@@ -105,10 +114,14 @@ Este nuevo escenario obliga a crear un nuevo test para saber si nuestro robot es
 el nuevo requerimiento.
 
 ```java
+  ...
+
   @Test
   void should_a_make_a_new_engine_weight_equal_to_160() {
     fail("Robot CarBuilderRobot don't can build engines!");
   }
+  
+  ...
 ```
 
 ### El problema:
@@ -130,6 +143,8 @@ satisfacer los nuevos requerimientos de la empresa.
 [CarBuilderRobotTest](1-single/src/test/java/cl/mobdev/onboarding/single/goodRobot/CarBuilderRobotTest.java)
 
 ```java
+  ...
+
  /*
   * El robot CarBuilderRobot ahora solo se dedica a construir autos,
   * las tareas de pintura y contruccion de motores las hacen otros robots.
@@ -152,11 +167,19 @@ satisfacer los nuevos requerimientos de la empresa.
 
     assertEquals(engineExpected, newCar.getEngine());
   }
+
+  --------
+
+  Test Results:
+  ✓ should_a_make_a_new_car_without_painting()
+  ✓ should_a_make_a_new_car_without_engine()
 ```
 
 [CarPainterRobotTest](1-single/src/test/java/cl/mobdev/onboarding/single/goodRobot/CarPainterRobotTest.java)
 
 ```java
+  ...
+
   /*
    * El robot CarPainterRobotTest puede pintar autos, incluso si
    * el motor no esta instalado, cada tarea es independiente, pueden
@@ -173,11 +196,17 @@ satisfacer los nuevos requerimientos de la empresa.
     assertEquals(colorExpected, carPainted.getColor());
   }
 
+  --------
+
+  Test Results:
+  ✓ should_a_painted_a_new_car_color_red()
 ```
 
 [EngineBuilderRobotTest](1-single/src/test/java/cl/mobdev/onboarding/single/goodRobot/EngineBuilderRobotTest.java)
 
 ```java
+  ...
+
   /*
    * La creación del robot EngineBuilderRobot permite separar
    * responsabilidades, ahora cada robot hace tareas especificas
@@ -193,7 +222,7 @@ satisfacer los nuevos requerimientos de la empresa.
       
     assertEquals(capacityExpected, newEngine1600CC.getCapacity());
   }
-
+  
   @Test
   void should_a_make_a_new_engine_with_weight_equal_to_160() {
     int weightExpected = 160;
@@ -202,6 +231,12 @@ satisfacer los nuevos requerimientos de la empresa.
 
     assertEquals(weightExpected, newEngine1600CC.getWeight());
   }
+  
+  --------
+      
+  Test Results:
+  ✓ should_a_make_a_new_engine_with_capacity_1600()
+  ✓ should_a_make_a_new_engine_with_weight_equal_to_160()
 ```
 
 ---
@@ -212,41 +247,50 @@ satisfacer los nuevos requerimientos de la empresa.
 
 Modulo: [2-open](2-open/README.md)
 
-Hemos construido 2 robots, uno que construye autos ([CarBuilderRobot](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/CarBuilderRobot.java)) y otro que puede calcular el costo de produccion 
-en base al costo de cada rueda y los cinturones de seguridad que tienen cada auto.
+Hemos construido 2 robots, uno que construye autos ([CarBuilderRobot](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/CarBuilderRobot.java)) y otro que puede calcular el costo de producción 
+en base al costo de cada puerta que tienen cada auto.
 
+[Car](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/domain/Car.java)
+```java
+public class Car {
+
+  private final String model;
+
+  public Car(String model) {
+    this.model = model;
+  }
+
+  public String getModel() {
+    return model;
+  }
+
+}
+```
 [CarInventoryRobot](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/CarInventoryRobot.java)
 ```java
 public class CarInventoryRobot {
 
-  private final int costByWheel = 50;
-  private final int costBySecurityBelt = 5;
+  private final int costByDoor = 50;
 
-  private final int wheelsBySedanCar = 4;
-  private final int beltsBySedanCar = 5;
-
-  private final int wheelsBySuvCar = 4;
-  private final int beltsBySuvCar = 5;
-
-  private final int wheelsByOffRoadCar = 5;
-  private final int beltsByOffRoadCar = 4;
+  private final int doorsBySedan = 4;
+  private final int doorsBySuv = 5;
+  private final int doorsByOffRoad = 2;
 
   public int calculateTotalCost(Car car) {
 
     if ("sedan".equals(car.getModel())) {
 
-      return costByWheel * wheelsBySedanCar + costBySecurityBelt * beltsBySedanCar;
+      return costByDoor * doorsBySedan;
 
     } else if ("suv".equals(car.getModel())) {
 
-      return costByWheel * wheelsBySuvCar + costBySecurityBelt * beltsBySuvCar;
+      return costByDoor * doorsBySuv;
 
     } else if ("offRoad".equals(car.getModel())) {
 
-      return costByWheel * wheelsByOffRoadCar + costBySecurityBelt * beltsByOffRoadCar;
+      return costByDoor * doorsByOffRoad;
 
-    }
-    else {
+    } else {
 
       throw new RuntimeException("Robot CarInventoryRobot don't can calculate cost for this model");
 
@@ -262,34 +306,38 @@ Para probar el robot de inventarios el jefe de finazas crea los siguientes test:
 ```java
   @Test
   void should_return_correct_cost_when_calculate_3_sedan_cars() {
-    int costExpected = 675;
-    
+    int costExpected = 600;
+
     Car sedanCar1 = carBuilderRobot.makeANewSedan();
     Car sedanCar2 = carBuilderRobot.makeANewSedan();
     Car sedanCar3 = carBuilderRobot.makeANewSedan();
-    
+
     int totalCost = carInventoryRobot.calculateTotalCost(sedanCar1)
-      + carInventoryRobot.calculateTotalCost(sedanCar2)
-      + carInventoryRobot.calculateTotalCost(sedanCar3);
+        + carInventoryRobot.calculateTotalCost(sedanCar2)
+        + carInventoryRobot.calculateTotalCost(sedanCar3);
     
     assertEquals(costExpected, totalCost);
   }
 
   @Test
-  void should_return_correct_cost_when_calculate_1_sedan_car_1_suv_car_1_offRoad_car() {
-    int costExpected = 720;
-
+  void should_return_correct_cost_when_calculate_1_suv_car_1_suv_car_1_offRoad_car() {
+    int costExpected = 550;
+    
     Car sedanCar = carBuilderRobot.makeANewSedan();
     Car suvCar = carBuilderRobot.makeANewSuv();
     Car offRoadCar = carBuilderRobot.makeANewOffRoad();
-
+    
     int totalCost = carInventoryRobot.calculateTotalCost(sedanCar)
-      + carInventoryRobot.calculateTotalCost(suvCar)
-      + carInventoryRobot.calculateTotalCost(offRoadCar);
-
-      assertEquals(costExpected, totalCost);
+        + carInventoryRobot.calculateTotalCost(suvCar)
+        + carInventoryRobot.calculateTotalCost(offRoadCar);
+    
+    assertEquals(costExpected, totalCost);
   }
+  --------
 
+  Test Results:
+  ✓ should_return_correct_cost_when_calculate_3_sedan_cars()
+  ✓ should_return_correct_cost_when_calculate_1_suv_car_1_suv_car_1_offRoad_car()
 ```
 
 El robot supera exitosamente los test, pero ha llegado una nueva informacion:
@@ -301,37 +349,43 @@ Este nuevo escenario obliga a crear un nuevo test para saber si nuestro robot es
 el nuevo requerimiento, pero el test falla.
 
 ```java
+  ...
+
+  @Test
   void should_return_correct_cost_of_wheels_when_calculate_2_coupe_car() {
-    int costExpected = 420;
+    int costExpected = 100;
 
     Car coupeCar1 = carBuilderRobot.makeANewCoupe();
     Car coupeCar2 = carBuilderRobot.makeANewCoupe();
 
     int totalCost = carInventoryRobot.calculateTotalCost(coupeCar1)
-    + carInventoryRobot.calculateTotalCost(coupeCar2);
+      + carInventoryRobot.calculateTotalCost(coupeCar2);
 
     assertEquals(costExpected, totalCost);
   }
-```
-```java
-  "Robot CarInventoryRobot don't can calculate cost for this model"
+
+  --------
+
+  Test Results:
+  ✗ should_return_correct_cost_when_calculate_3_sedan_cars()
+      "Robot CarInventoryRobot don't can calculate cost for this model"
 ```
 
 ### El problema:
-Si se quiere que [CarInventoryRobot](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/CarInventoryRobot.java) calcule el costo total de un auto de tipo distinto a `sedan`, `suv` u `offRoad`,
-entonces se debe modificar la programación del robot e incluir otros modelos, esto rompe el principio
+El robot [CarInventoryRobot](2-open/src/main/java/cl/mobdev/onboarding/open/badRobot/CarInventoryRobot.java) solo puede calcular el costo total de los modelos `sedan`, `suv` u `offRoad`,
+por lo tanto se debe modificar la programación del robot si se quiere incluir otros modelos, esto rompe el principio
 de cerrado para modificaciones.
 
 ### La solucion:
-Primero traspasar la responsabilidad del numero de ruedas y cinturones de seguridad a cada tipo de auto, crear entidades
+Convertir el attributo `model` en un tipo y crear entidades
 especificas de 
 [SedanCar](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/SedanCar.java), 
 [SuvCar](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/SuvCar.java) ,
 [OffRoadCar](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/OffRoadCar.java) y
 [CoupeCar](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/CoupeCar.java) 
 que hereden de la entidad 
-[Car](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/Car.java). 
-
+[Car](2-open/src/main/java/cl/mobdev/onboarding/open/goodRobot/domain/Car.java) 
+y traspasar la responsabilidad del numero de puertas a cada tipo o modelo de auto
 
 Ademas refactorizamos el robot `CarInventoryRobot` para que de esta manera solo se preocupe de calcular el costo de cualquier
 tipo de automovil que herede de la entidad `Car`.
@@ -341,10 +395,9 @@ tipo de automovil que herede de la entidad `Car`.
 public class CarInventoryRobot {
 
   private final int costByWheel = 50;
-  private final int costBySecurityBelt = 5;
 
   public int calculateTotalCost(Car car) {
-    return costBySecurityBelt * car.getNumberOfSecurityBelts() + costByWheel * car.getNumberOfWheels();
+    return costByWheel * car.getNumberOfDoors();
   }
 
 }
@@ -354,49 +407,63 @@ Al someterlo nuevamente a los mismos tests demuestra que puede abarcar el nuevo 
 
 [CarInventoryRobotTest](2-open/src/test/java/cl/mobdev/onboarding/open/goodRobot/CarInventoryRobotTest.java)
 ```java
+...
 
   @Test
   void should_return_correct_cost_when_calculate_3_sedan_cars() {
-    int costExpected = 675;
+    int costExpected = 600;
 
     SedanCar sedanCar1 = carBuilderRobot.makeANewSedan();
     SedanCar sedanCar2 = carBuilderRobot.makeANewSedan();
     SedanCar sedanCar3 = carBuilderRobot.makeANewSedan();
 
     int totalCost = carInventoryRobot.calculateTotalCost(sedanCar1)
-      + carInventoryRobot.calculateTotalCost(sedanCar2)
-      + carInventoryRobot.calculateTotalCost(sedanCar3);
+        + carInventoryRobot.calculateTotalCost(sedanCar2)
+        + carInventoryRobot.calculateTotalCost(sedanCar3);
 
     assertEquals(costExpected, totalCost);
   }
 
   @Test
   void should_return_correct_cost_when_calculate_1_sedan_car_1_suv_car_1_offRoad_car() {
-    int costExpected = 720;
+    int costExpected = 550;
 
     SedanCar sedanCar = carBuilderRobot.makeANewSedan();
     SuvCar suvCar = carBuilderRobot.makeANewSuvCar();
     OffRoadCar offRoadCar = carBuilderRobot.makeANewOffRoad();
 
     int totalCost = carInventoryRobot.calculateTotalCost(sedanCar)
-      + carInventoryRobot.calculateTotalCost(suvCar)
-      + carInventoryRobot.calculateTotalCost(offRoadCar);
+        + carInventoryRobot.calculateTotalCost(suvCar)
+        + carInventoryRobot.calculateTotalCost(offRoadCar);
 
     assertEquals(costExpected, totalCost);
   }
 
+  /*
+   * Un mejor modelo de dominio permite al nuevo CarInventoryRobot poder calcular
+   * correctamente los costos del nuevo modelo Coupe, ademas, como esta cerrado
+   * a modificacion y abierto a extension, puede calcular el costo cualquier objeto Car
+   */
+
   @Test
   void should_return_correct_cost_of_wheels_when_calculate_2_coupe_car() {
-    int costExpected = 420;
+    int costExpected = 200;
 
     CoupeCar coupeCar1 = carBuilderRobot.makeANewCoupeCar();
     CoupeCar coupeCar2 = carBuilderRobot.makeANewCoupeCar();
 
     int totalCost = carInventoryRobot.calculateTotalCost(coupeCar1)
-      + carInventoryRobot.calculateTotalCost(coupeCar2);
+        + carInventoryRobot.calculateTotalCost(coupeCar2);
 
     assertEquals(costExpected, totalCost);
   }
+
+  --------
+
+  Test Results:
+  ✓ should_return_correct_cost_when_calculate_3_sedan_cars()
+  ✓ should_return_correct_cost_when_calculate_1_sedan_car_1_suv_car_1_offRoad_car()
+  ✓ should_return_correct_cost_of_wheels_when_calculate_2_coupe_car()
 ```
 
 ---
@@ -416,7 +483,7 @@ abstract public class Vehicle {
 
   public abstract int numberOfWheels();
 
-  public abstract int numberOfSecurityBelt();
+  public abstract int numberOfDoors();
 
 }
 ```
@@ -425,12 +492,12 @@ abstract public class Vehicle {
 public class Car extends Vehicle {
 
   @Override
-  public int numberOfSecurityBelt() {
-    return 5;
+  public int numberOfWheels() {
+    return 4;
   }
 
   @Override
-  public int numberOfWheels() {
+  public int numberOfDoors() {
     return 4;
   }
 
@@ -443,7 +510,7 @@ Para probar el nuevo modelo de dominio creamos tests para el robot de inventario
 ```java
   @Test
   void should_return_correct_cost_when_calculate_2_cars() {
-    int costExpected = 450;
+    int costExpected = 480;
 
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
@@ -456,7 +523,7 @@ Para probar el nuevo modelo de dominio creamos tests para el robot de inventario
 
   @Test
   void should_return_correct_cost_when_calculate_3_cars() {
-    int costExpected = 675;
+    int costExpected = 720;
 
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
@@ -468,7 +535,11 @@ Para probar el nuevo modelo de dominio creamos tests para el robot de inventario
 
     assertEquals(costExpected, totalCost);
   }
+  --------
 
+  Test Results:
+  ✓ should_return_correct_cost_when_calculate_2_cars()
+  ✓ should_return_correct_cost_when_calculate_3_cars()
 ```
 
 El robot supera exitosamente los test, pero ha llegado una nueva informacion:
@@ -489,8 +560,8 @@ public class Motorcycle extends Vehicle {
   }
 
   @Override
-  public int numberOfSecurityBelt() {
-    throw new UnsupportedOperationException("Motorbikes don't have security belts");
+  public int numberOfDoors() {
+    throw new UnsupportedOperationException("Motorbikes don't have doors");
   }
 
 }
@@ -502,7 +573,7 @@ y un nuevo test para saber si nuestro robot es capaz de satisfacer el nuevo requ
   @Test
   void should_return_correct_cost_when_calculate_1_motorcycle() {
 
-    int costExpected = 100;
+    int costExpected = 20;
 
     Motorcycle motorcycle = motorcycleBuilderRobot.makeANewMotorcycle();
 
@@ -510,10 +581,13 @@ y un nuevo test para saber si nuestro robot es capaz de satisfacer el nuevo requ
 
     assertEquals(costExpected, totalCost);
   }
+
+  --------
+
+  Test Results:
+  ✗ should_return_correct_cost_when_calculate_3_sedan_cars()
+      "Motorbikes don't have doors"
 ```
-````java
-  "Motorbikes don't have security belts"
-````
 
 ### El problema:
 El robot `VehicleInventoryRobot` recibe como parametro un objeto `Vehicle`, cuando se envia un objeto `Car` funciona 
@@ -537,12 +611,12 @@ abstract public class Vehicle {
 ```java
 public class Car extends Vehicle {
 
-  public int numberOfSecurityBelt() {
-    return 5;
-  }
-
   @Override
   public int numberOfWheels() {
+    return 4;
+  }
+
+  public int numberOfDoors() {
     return 4;
   }
 
@@ -569,14 +643,14 @@ y refactorizar el robot `VehicleInventoryRobot`
 public class VehicleInventoryRobot {
 
   private final int costByWheel = 50;
-  private final int costBySecurityBelt = 5;
+  private final int costByDoor = 5;
 
   public int calculateTotalCostOfWheels(Vehicle vehicle) {
     return costByWheel * vehicle.numberOfWheels();
   }
 
-  public int calculateTotalCostOfSecurityBelts(Car car) {
-    return costBySecurityBelt * car.numberOfSecurityBelt();
+  public int calculateTotalCostOfDoors(Car car) {
+    return costByDoor * car.numberOfDoors();
   }
 
 }
@@ -587,36 +661,38 @@ Ahora, si nuevamente sometemos a los mismos test el robot no lanzara errores.
 [VehicleInventoryRobotTest](3-liskov/src/test/java/cl/mobdev/onboarding/liskov/goodRobot/VehicleInventoryRobotTest.java)
 
 ```java
+...
+
   @Test
   void should_return_correct_cost_when_calculate_2_cars() {
-    int costExpected = 450;
-
+    int costExpected = 440;
+    
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
-
+    
     int totalCost = vehicleInventoryRobot.calculateTotalCostOfWheels(car1)
-      + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car1)
-      + vehicleInventoryRobot.calculateTotalCostOfWheels(car2)
-      + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car2);
-
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car1)
+        + vehicleInventoryRobot.calculateTotalCostOfWheels(car2)
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car2);
+    
     assertEquals(costExpected, totalCost);
   }
 
   @Test
   void should_return_correct_cost_when_calculate_3_cars() {
-    int costExpected = 675;
-
+    int costExpected = 660;
+    
     Car car1 = carBuilderRobot.makeANewCar();
     Car car2 = carBuilderRobot.makeANewCar();
     Car car3 = carBuilderRobot.makeANewCar();
-
+    
     int totalCost = vehicleInventoryRobot.calculateTotalCostOfWheels(car1)
-      + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car1)
-      + vehicleInventoryRobot.calculateTotalCostOfWheels(car2)
-      + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car2)
-      + vehicleInventoryRobot.calculateTotalCostOfWheels(car3)
-      + vehicleInventoryRobot.calculateTotalCostOfSecurityBelts(car3);
-
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car1)
+        + vehicleInventoryRobot.calculateTotalCostOfWheels(car2)
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car2)
+        + vehicleInventoryRobot.calculateTotalCostOfWheels(car3)
+        + vehicleInventoryRobot.calculateTotalCostOfDoors(car3);
+    
     assertEquals(costExpected, totalCost);
   }
 
@@ -626,17 +702,24 @@ Ahora, si nuevamente sometemos a los mismos test el robot no lanzara errores.
    * y de una motocicleta porque ambos heredan de Vehicle, por lo tanto
    * cumple con el principio de sustitucion de Liskov
    */
-   
+
   @Test
   void should_return_correct_cost_when_calculate_1_motorcycle() {
     int costExpected = 100;
-
+    
     Motorcycle motorcycle = motorcycleBuilderRobot.makeANewMotorcycle();
-
+    
     int totalCost = vehicleInventoryRobot.calculateTotalCostOfWheels(motorcycle);
-
+    
     assertEquals(costExpected, totalCost);
   }
+
+  --------
+
+  Test Results:
+  ✓ should_return_correct_cost_when_calculate_2_cars()
+  ✓ should_return_correct_cost_when_calculate_3_cars()
+  ✓ should_return_correct_cost_when_calculate_1_motorcycle()
 ```
 
 ---
@@ -923,6 +1006,12 @@ Como siempre, los test de `EngineBuilderRobot` nos permite comprobar que todo fu
 
     assertEquals(weighExpected, newEngine1600CC.getWeight());
   }
+
+  --------
+
+  Test Results:
+  ✓ should_a_make_a_new_engine_with_1600cc_capacity()
+  ✓ should_a_make_a_new_engine_with_160_weigh()
 ````
 
 La fama de este automovil es tal que permite crear nuevos negocios:
@@ -1030,9 +1119,7 @@ y si comprobamos el funcionamiento del robot, ahora vemos que es capaz de constr
 
 [EngineBuilderRobotTest](5-dependency/src/test/java/cl/mobdev/onboarding/dependency/goodRobot/EngineBuilderRobotTest.java)
 ````java
-public class EngineBuilderRobotTest {
-
-  private EngineBuilderRobot engineBuilderRobot;
+  ...
 
   @Test
   void should_a_make_a_new_engine_with_1600cc_capacity() {
@@ -1101,6 +1188,14 @@ public class EngineBuilderRobotTest {
 
     assertEquals(weighExpected, newEngine2500CC.getWeight());
   }
-  
-}
+
+  --------
+
+  Test Results:
+  ✓ should_a_make_a_new_engine_with_1600cc_capacity()
+  ✓ should_a_make_a_new_engine_with_160_weigh()
+  ✓ should_a_make_a_new_engine_with_2000cc_capacity()
+  ✓ should_a_make_a_new_engine_with_200_weigh()
+  ✓ should_a_make_a_new_engine_with_2500cc_capacity()
+  ✓ should_a_make_a_new_engine_with_250_weigh()
 ````

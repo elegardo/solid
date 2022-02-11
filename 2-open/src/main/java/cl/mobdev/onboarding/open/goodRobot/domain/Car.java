@@ -2,22 +2,14 @@ package cl.mobdev.onboarding.open.goodRobot.domain;
 
 abstract public class Car {
 
-  private int numberOfWheels;
-  private int numberOfSecurityBelts;
+  private final int numberOfDoors;
 
-  public int getNumberOfWheels() {
-    return numberOfWheels;
+  protected Car(int numberOfDoors) {
+    this.numberOfDoors = numberOfDoors;
   }
 
-  public void setNumberOfWheels(int numberOfWheels) {
-    this.numberOfWheels = numberOfWheels;
+  public int getNumberOfDoors() {
+    return numberOfDoors;
   }
 
-  public int getNumberOfSecurityBelts() {
-    return numberOfSecurityBelts;
-  }
-
-  public void setNumberOfSecurityBelts(int numberOfSecurityBelts) {
-    this.numberOfSecurityBelts = numberOfSecurityBelts;
-  }
 }
